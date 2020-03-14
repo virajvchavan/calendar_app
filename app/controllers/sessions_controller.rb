@@ -13,6 +13,8 @@ class SessionsController < ApplicationController
     refresh_token = auth.credentials.refresh_token
     token.refresh_token = refresh_token if refresh_token.present?
 
+    # todo: call the api, and save data to db & then redirect
+
     token.save
     redirect_to root_path
   end

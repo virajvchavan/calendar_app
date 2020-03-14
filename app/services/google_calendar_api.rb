@@ -3,7 +3,7 @@ class GoogleCalendarApi
   base_uri 'https://www.googleapis.com/calendar/v3'
 
   def initialize(token)
-    @token = token
+    @token = token.expired? ? token.refresh_token! : token
   end
 
   def list_calendar_lists
