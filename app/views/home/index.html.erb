@@ -1,0 +1,8 @@
+<% if current_user.present? %>
+  User: <%= current_user.email %>
+  <br>
+  <%= link_to 'Log out', logout_path %>
+
+<% else %>
+  <a href="/auth/google_oauth2">Login</a>
+<% end %>
