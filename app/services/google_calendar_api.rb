@@ -6,12 +6,12 @@ class GoogleCalendarApi
     @token = token.expired? ? token.refresh_token! : token
   end
 
-  def calendar_list
-    fetch_items('/users/me/calendarList')
+  def calendar_list(queryParams = {})
+    fetch_items("/users/me/calendarList?#{queryParams.try(:to_query)}")
   end
 
-  def calendar_events(calender_id = 'primary', queryParams = nil)
-    fetch_items("/calendars/#{calender_id}/events?#{queryParams}")
+  def calendar_events(calender_id = 'primary', queryParams = {})
+    fetch_items("/calendars/#{calender_id}/events?#{queryParams.try(:to_query)}")
   end
 
   private
@@ -58,9 +58,9 @@ class GoogleCalendarApi
       location: event['location'],
       status: event['status'],
       html_link: event['htmlLink'],
-      start_time: event['start']['dateTime'] || event['start']['date'],
-      end_time: event['end']['dateTime'] || event['start']['date'],
-      all_day_event: event['start']['date'] ? true : false
+      start_time: event['start'].try(:[], 'dateTime') || event['start'].try(:[], 'date'),
+      end_time: event['end'].try(:[], 'dateTime') || event['start'].try(:[], 'date'),
+      all_day_event: event['start'].try(:[], 'date') ? true : false
     }
   end
 end

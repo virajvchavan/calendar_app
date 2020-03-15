@@ -28,6 +28,8 @@ class Token < ApplicationRecord
       )
 
       # todo: handle api failure here
+      puts "refresh token response: " + response
+
       new_access_token = JSON.parse(response.body)
       self.access_token = new_access_token['access_token']
       self.expires_at = Time.now.to_i + new_access_token['expires_in'].to_i
