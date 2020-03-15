@@ -1,4 +1,5 @@
 <h4>Today's Events (<%= Date.today %>)</h4>
+<br/>
 <% @calendars.each do |calendar| %>
    <ul class="collection with-header">
     <li class="collection-header"><h6><%= calendar['summary'] %></h6></li>
