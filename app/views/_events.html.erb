@@ -1,0 +1,7 @@
+<% events.each do |event|%>
+  <li class="collection-item">
+    <span class='bold-text'><%= event['summary'] %></span>
+    <p><%= event['description'] %></p>
+    <p><%= event['start_time'] %></p>
+  </li>
+<%end%>

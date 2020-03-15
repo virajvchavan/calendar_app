@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CalenderApp</title>
+    <title>CalendarApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,17 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">CalendarApp</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><a href="<%= events_daily_path %>">Today's Events</a></li>
+          <li><a href="<%= calendars_index_path %>">Calendars</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class='container'>
+      <%= yield %>
+    </div>
   </body>
 </html>

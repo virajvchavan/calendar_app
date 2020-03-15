@@ -1,9 +1,10 @@
-Daily Events
+<h4>Today's Events (<%= Date.today %>)</h4>
 <% @calendars.each do |calendar| %>
-  <h3><%= calendar['summary'] %></h3>
-  <ul>
-    <% calendar['daily_events'].each do |event|%>
-      <li><%= event['summary'] %></li>
+   <ul class="collection with-header">
+    <li class="collection-header"><h6><%= calendar['summary'] %></h6></li>
+    <%= render partial: "/events", locals: { events: calendar['daily_events']} %>
+    <% if(calendar['daily_events'].count == 0) %>
+      <li class="collection-item">No events for today!</li>
     <%end%>
   </ul>
 <%end%>

@@ -1,4 +1,14 @@
-<h1>Calendars</h1>
-<% @calendars.each do |calendar| %>
-  <h3><%= link_to calendar['summary'], calendar_events_path(calendar['id']) %></h3>
-<%end%>
+<h4>Calendars</h4>
+<div class='row'>
+  <% @calendars.each do |calendar| %>
+    <div class="col s6">
+      <a href="<%= calendar_events_path(calendar['id']) %>">
+        <div class="card blue-grey darken-1">
+          <div class="card-content flow-text" style="background-color: <%= calendar['bg_color'] %>; color: <%= calendar['fg_color'] %>">
+            <%= calendar['summary'] %>
+          </div>
+        </div>
+      </a>
+    </div>
+  <%end%>
+</div>

@@ -1,6 +1,7 @@
-<h1>All Events for <%= @calendar['summary'] %></h1>
-<ul>
-  <% @calendar['events'].each do |event| %>
-    <li><%= event['summary'] %></li>
+<ul class="collection with-header">
+  <li class="collection-header"><h4>All Events for <%= @calendar['summary'] %></h4></li>
+  <%= render partial: "/events", locals: { events: @calendar['events']} %>
+  <% if(@calendar['events'].count == 0) %>
+    <li class="collection-item">No events for today!</li>
   <%end%>
-<ul>
+</ul>
