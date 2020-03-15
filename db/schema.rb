@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_14_115726) do
+ActiveRecord::Schema.define(version: 2020_03_15_070141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "calendars", force: :cascade do |t|
+    t.string "g_id", null: false
+    t.string "summary"
+    t.string "timezone"
+    t.string "bg_color"
+    t.string "fg_color"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_calendars_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "g_id", null: false
+    t.string "summary"
+    t.text "description"
+    t.string "location"
+    t.string "status"
+    t.string "html_link"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.boolean "all_day_event"
+    t.bigint "calendar_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["calendar_id"], name: "index_events_on_calendar_id"
+  end
 
   create_table "tokens", force: :cascade do |t|
     t.integer "user_id"
@@ -33,4 +61,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_115726) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "calendars", "users"
+  add_foreign_key "events", "calendars"
 end

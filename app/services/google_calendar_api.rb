@@ -59,7 +59,8 @@ class GoogleCalendarApi
       status: event['status'],
       html_link: event['htmlLink'],
       start_time: event['start']['dateTime'] || event['start']['date'],
-      end_time: event['end']['dateTime'] || event['start']['date']
+      end_time: event['end']['dateTime'] || event['start']['date'],
+      all_day_event: event['start']['date'] ? true : false
     }
   end
 end

@@ -11,6 +11,7 @@
 #
 class User < ApplicationRecord
   has_many :tokens, dependent: :destroy
+  has_many :calendars, dependent: :destroy
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize do |record|
