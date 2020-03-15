@@ -19,22 +19,27 @@ class Token < ApplicationRecord
   end
 
   def refresh_token!
-    if provider == 'google'
-      response = HTTParty.post('https://oauth2.googleapis.com/token', :body => {
-        :grant_type => 'refresh_token',
-        :refresh_token => self.refresh_token,
-        :client_id => ENV['google_client_id'],
-        :client_secret => ENV['google_client_secret']},
-      )
+    return unless provider == 'google'
 
-      # todo: handle api failure here
-      puts "refresh token response: " + response.to_s
+    response = fetch_google_access_token
+    # todo: handle api failure here
+    puts 'refresh token response: ' + response.to_s
 
-      new_access_token = JSON.parse(response.body)
-      self.access_token = new_access_token['access_token']
-      self.expires_at = Time.now.to_i + new_access_token['expires_in'].to_i
-      self.save
-      self
-    end
+    new_access_token = JSON.parse(response.body)
+    self.access_token = new_access_token['access_token']
+    self.expires_at = Time.now.to_i + new_access_token['expires_in'].to_i
+    self.save
+    self
+  end
+
+  private
+  def fetch_google_access_token
+    HTTParty.post('https://oauth2.googleapis.com/token', body: {
+        grant_type: 'refresh_token',
+        refresh_token: self.refresh_token,
+        client_id: ENV['google_client_id'],
+        client_secret: ENV['google_client_secret']
+      }
+    )
   end
 end
