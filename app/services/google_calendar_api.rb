@@ -6,12 +6,16 @@ class GoogleCalendarApi
     @token = token.expired? ? token.refresh_token! : token
   end
 
-  def calendar_list(queryParams = {})
-    fetch_items("/users/me/calendarList?#{queryParams.try(:to_query)}")
+  def calendar_list(query_params = {})
+    fetch_items(
+      "/users/me/calendarList?#{query_params.try(:to_query)}"
+    )
   end
 
-  def calendar_events(calender_id = 'primary', queryParams = {})
-    fetch_items("/calendars/#{calender_id}/events?#{queryParams.try(:to_query)}")
+  def calendar_events(calender_id = 'primary', query_params = {})
+    fetch_items(
+      "/calendars/#{calender_id}/events?#{query_params.try(:to_query)}"
+    )
   end
 
   private
@@ -37,7 +41,7 @@ class GoogleCalendarApi
   end
 
   def headers
-    {headers: {"Authorization" => "Bearer #{@token.access_token}"}}
+    { headers: { 'Authorization' => "Bearer #{@token.access_token}" } }
   end
 
   def filter_calendar(calendar)
