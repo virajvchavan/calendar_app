@@ -12,10 +12,16 @@
   <body>
     <nav>
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">CalendarApp</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
           <li><a href="<%= events_daily_path %>">Today's Events</a></li>
           <li><a href="<%= calendars_index_path %>">Calendars</a></li>
+        </ul>
+        <ul id="nav-mobile" class="right">
+          <li>
+            <img src="<%= current_user.picture_url %>" class='profile_picture' height=40 >
+          </li>
+          <li><%= current_user.name %></li>
+          <li><a href="<%= logout_path %>">Logout</a></li>
         </ul>
       </div>
     </nav>
