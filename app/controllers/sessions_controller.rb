@@ -15,12 +15,12 @@ class SessionsController < ApplicationController
 
     user.load_calendars if is_new_user
 
-    redirect_to events_index_path
+    redirect_to events_daily_path
   end
 
   def logout
     log_out
-    redirect_to events_index_path
+    redirect_to root_path
   end
 
 end

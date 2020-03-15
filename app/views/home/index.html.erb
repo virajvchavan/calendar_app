@@ -1,8 +1,10 @@
-<% if current_user.present? %>
-  User: <%= current_user.email %>
-  <br>
-  <%= link_to 'Log out', logout_path %>
-
-<% else %>
-  <a href="/auth/google_oauth2">Login</a>
-<% end %>
+<div className="card-panel grey lighten-2">
+  <div className="container">
+    <h3>Calendar App</h3>
+    <p>Easy calendar events viewer. View your Google Calendar events now!</p>
+    <br/>
+    <a href=<%= login_path %> class='waves-effect waves-light btn teal lighten-2'>
+      Login using Google
+    </a>
+  </div>
+</div>
