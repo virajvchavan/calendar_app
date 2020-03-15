@@ -19,11 +19,39 @@ class User < ApplicationRecord
       record.email = auth.info.email
       record.picture_url = auth.info.image
     end
-    user.new_record? && user.save
-    user
+    fetch_user_data = user.new_record? ? true : false
+    user.save
+    [user, fetch_user_data]
   end
 
   def google_token
     tokens.find_by(provider: 'google')
+  end
+
+  # todo: move these methods to a better place, maybe into a job
+  def load_calendars(pageToken = {})
+    service = GoogleCalendarApi.new(google_token)
+    response = service.calendar_list({pageToken: pageToken})
+    response[:items].each do |item|
+      c = calendars.find_or_create_by(g_id: item[:g_id])
+      c.assign_attributes(item.except(:g_id))
+      c.save!
+      load_events(c, service)
+    end
+    if response[:nextPageToken]
+      load_calendars(service, response[:nextPageToken])
+    end
+  end
+
+  def load_events(calendar, service, pageToken = {})
+    response = service.calendar_events(calendar.g_id, {pageToken: pageToken})
+    response[:items].each do |item|
+      c = calendar.events.find_or_create_by(g_id: item[:g_id])
+      c.assign_attributes(item.except(:g_id))
+      c.save!
+    end
+    if response[:nextPageToken]
+      load_events(calendar, service, response[:nextPageToken])
+    end
   end
 end
