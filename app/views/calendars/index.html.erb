@@ -1,0 +1,4 @@
+<h1>Calendars</h1>
+<% @calendars.each do |calendar| %>
+  <h3><%= link_to calendar['summary'], calendar_events_path(calendar['id']) %></h3>
+<%end%>

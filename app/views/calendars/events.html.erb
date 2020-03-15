@@ -1,0 +1,6 @@
+<h1>All Events for <%= @calendar['summary'] %></h1>
+<ul>
+  <% @calendar['events'].each do |event| %>
+    <li><%= event['summary'] %></li>
+  <%end%>
+<ul>

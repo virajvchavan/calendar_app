@@ -15,4 +15,8 @@
 class Calendar < ApplicationRecord
   belongs_to :user
   has_many :events, dependent: :destroy
+
+  def daily_events
+    events.where(start_time: DateTime.now.beginning_of_day.utc..DateTime.now.end_of_day.utc).as_json
+  end
 end
