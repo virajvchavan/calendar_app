@@ -6,12 +6,25 @@ class GoogleCalendarApi
     @token = token.expired? ? token.refresh_token! : token
   end
 
-  def list_calendar_lists
-    self.class.get('/users/me/calendarList', headers)
+  def calendar_list
+    fetch_items('/users/me/calendarList')
   end
 
-  def get_calendar_events(calender_id='primary')
-    self.class.get("/calendars/#{calender_id}/events", headers)
+  def calendar_events(calender_id = 'primary', queryParams = nil)
+    fetch_items("/calendars/#{calender_id}/events?#{queryParams}")
+  end
+
+  def fetch_items(url)
+    items = []
+    response = self.class.get(url, headers)
+    if response.code == 200
+      items = response.parsed_response['items']
+    end
+    {
+      items: items,
+      nextPageToken: response.parsed_response['nextPageToken'],
+      nextSyncToken: response.parsed_response['nextSyncToken']
+    }
   end
 
   def headers
