@@ -18,11 +18,37 @@ class GoogleCalendarApi
     )
   end
 
+  def watch_calendar_events(calendar_id)
+    response = self.class.post(
+      "/calendars/#{calendar_id}/events/watch",
+      webhook_params
+    )
+
+    if response.code == 200
+      puts "Webook registered for calendar: #{calendar_id} /events (User #{@token.user_id})"
+    else
+      puts "Error registering webook for calendar events (Calendar: #{calendar_id}, User #{@token.user_id})"
+    end
+  end
+
+  def watch_calendars
+    response = self.class.post(
+      '/users/me/calendarList/watch',
+      webhook_params
+    )
+
+    if response.code == 200
+      puts "Webook registered for calendars list (User #{@token.user_id}). Error: #{response}"
+    else
+      puts "Error registering webook for calendars (User #{@token.user_id}). Error: #{response}"
+    end
+  end
+
   private
 
   def fetch_items(url)
     items = []
-    response = self.class.get(url, headers)
+    response = self.class.get(url, auth_params)
     if response.code == 200
       items = response.parsed_response['items'].map do |item|
         case item['kind']
@@ -40,8 +66,22 @@ class GoogleCalendarApi
     }
   end
 
-  def headers
+  def auth_params
     { headers: { 'Authorization' => "Bearer #{@token.access_token}" } }
+  end
+
+  def webhook_params
+    {
+      headers: {
+        'Authorization' => "Bearer #{@token.access_token}",
+        'Content-Type': 'application/json'
+      },
+      body: {
+        id: SecureRandom.uuid,
+        type: 'webhook',
+        address: "https://#{DOMAIN_NAME}/google_webhook_callback"
+      }.to_json
+    }
   end
 
   def filter_calendar(calendar)
