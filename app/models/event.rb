@@ -18,4 +18,6 @@
 #
 class Event < ApplicationRecord
   belongs_to :calendar
+
+  scope :active,  -> { where('status != ?', 'cancelled') }
 end

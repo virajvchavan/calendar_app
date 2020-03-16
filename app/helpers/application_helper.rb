@@ -7,8 +7,8 @@ module ApplicationHelper
     format = event['all_day_event'] ? '%d %b %Y' : '%d %b %Y %H:%M UTC'
 
     html = "<p>"
-    html += "<div class='chip'>#{get_time(event['start_time'],format)} </div> - "
-    html += "<div class='chip'>#{get_time(event['end_time'],format)}</div>"
+    html += "<div class='chip'>#{get_time(event['start_time'], format)} </div> - " if event['start_time'].present?
+    html += "<div class='chip'>#{get_time(event['end_time'], format)}</div>" if event['end_time'].present?
     html += "</p>"
     html.html_safe
   end

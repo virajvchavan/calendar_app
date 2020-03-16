@@ -1,8 +1,8 @@
 <h4>All Events for <%= @calendar['summary'] %></h4>
 <br/>
 <ul class="collection with-header">
-  <%= render partial: "/events", locals: { events: @calendar['events']} %>
-  <% if(@calendar['events'].count == 0) %>
+  <%= render partial: "/events", locals: { events: @calendar['active_events']} %>
+  <% if(@calendar['active_events'].count == 0) %>
     <li class="collection-item">No events for this calendar!</li>
   <%end%>
 </ul>
