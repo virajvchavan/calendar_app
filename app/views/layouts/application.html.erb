@@ -12,16 +12,16 @@
   <body>
     <nav>
       <div class="nav-wrapper">
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <ul id="nav-mobile" class="left">
           <li><a href="<%= events_daily_path %>">Today's Events</a></li>
-          <li><a href="<%= calendars_index_path %>">Calendars</a></li>
+          <li><a href="<%= calendars_index_path %>">All Calendars</a></li>
         </ul>
         <% if current_user.present? %>
           <ul id="nav-mobile" class="right">
             <li>
               <img src="<%= current_user.picture_url %>" class='profile_picture' height=40 >
             </li>
-            <li><%= current_user.name %></li>
+            <li class='hide-on-small-only'><%= current_user.name %></li>
             <li><a href="<%= logout_path %>">Logout</a></li>
           </ul>
         <%end%>

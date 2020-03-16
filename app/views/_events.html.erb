@@ -1,7 +1,7 @@
-<% events.each do |event|%>
+<% events.each do |event, action|%>
   <li class="collection-item">
     <span class='bold-text'><%= event['summary'] %></span>
     <p><%= event['description'] %></p>
-    <p><%= event['start_time'] %></p>
+    <%= format_event_duration(event, action) %>
   </li>
 <%end%>
