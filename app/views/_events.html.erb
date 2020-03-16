@@ -3,5 +3,6 @@
     <span class='bold-text'><%= event['summary'] %></span>
     <p><%= event['description'] %></p>
     <%= format_event_duration(event, action) %>
+    <%= link_to "Open in Google Calendar", event['html_link'], target: '_blank' %>
   </li>
 <%end%>
