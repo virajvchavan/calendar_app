@@ -1,14 +1,20 @@
 <% events.each do |event, action|%>
-  <li class="collection-item">
-    <span class='bold-text'><%= event['summary'] %></span>
-    <p><%= event['description'] %></p>
-    <%= format_event_duration(event, action) %>
-    <% if event['location'].present? %>
-      <p class='row'>
-        <i class="small material-icons col s1">location_on</i>
-        <span class='col s10'> <%= event['location'] %></span>
-      </p>
-    <% end %>
-    <%= link_to "Open in Google Calendar", event['html_link'], target: '_blank' %>
+  <li class="card z-depth-1">
+    <div class='card-content'>
+      <span class='card-title text-darken-2'><%= event['summary'] %></span>
+      <p><%= event['description'] %></p>
+      <br/>
+      <%= format_event_duration(event, action) %>
+      <% if event['location'].present? %>
+        <br/>
+        <p class='row'>
+          <i class="small material-icons col s1">location_on</i>
+          <span class='col s10'> <%= event['location'] %></span>
+        </p>
+      <% end %>
+    </div>
+    <div class="card-action">
+      <%= link_to "Open in Google Calendar", event['html_link'], target: '_blank', class: 'blue-text text-darken-2' %>
+    </div>
   </li>
 <%end%>
