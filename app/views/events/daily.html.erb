@@ -1,4 +1,4 @@
-<h4>Today's Events (<%= Date.today %>)</h4>
+<h4>Today's Events (<%= Date.today.strftime('%d %b %Y') %>)</h4>
 <br/>
 <% @calendars.each do |calendar| %>
    <ul class="collection with-header">

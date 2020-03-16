@@ -26,3 +26,6 @@ $secondary-color: color("yellow", "base") !default;
   margin-right: 10px;
   border-radius: 50%;
 }
+.card .card-content .card-title {
+  font-weight: 400;
+}

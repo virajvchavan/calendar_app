@@ -6,8 +6,8 @@ class CalendarsController < ApplicationController
   end
 
   def events
-    calendar = current_user.calendars.find(params['calendar_id'])
-    redirect_to index_path unless calendar
+    calendar = current_user.calendars.find_by(id:params['calendar_id'])
+    redirect_to calendars_index_path unless calendar
     @calendar = calendar.as_json(only: calendar_json_params, include: :active_events)
   end
 
