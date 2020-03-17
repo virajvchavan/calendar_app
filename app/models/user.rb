@@ -2,12 +2,13 @@
 #
 # Table name: users
 #
-#  id          :bigint           not null, primary key
-#  name        :string
-#  email       :string
-#  picture_url :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                :bigint           not null, primary key
+#  name              :string
+#  email             :string
+#  picture_url       :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  google_sync_token :string
 #
 class User < ApplicationRecord
   has_many :tokens, dependent: :destroy
