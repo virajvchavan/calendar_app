@@ -37,7 +37,7 @@ class User < ApplicationRecord
       syncToken: self.google_sync_token
     })
     response[:items].each do |item|
-      calendar = calendars.find_or_create_by(g_id: item[:g_id])
+      calendar = calendars.find_or_initialize_by(g_id: item[:g_id])
       calendar.assign_attributes(item.except(:g_id))
       is_new_record = calendar.new_record?
       calendar.save!
