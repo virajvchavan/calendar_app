@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_17_152517) do
+ActiveRecord::Schema.define(version: 2020_03_17_153430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_03_17_152517) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "google_sync_token"
+    t.index ["user_id", "g_id"], name: "index_calendars_on_user_id_and_g_id", unique: true
     t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 
