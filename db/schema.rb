@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_17_153430) do
+ActiveRecord::Schema.define(version: 2020_03_17_161302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,10 @@ ActiveRecord::Schema.define(version: 2020_03_17_153430) do
     t.bigint "calendar_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["calendar_id", "g_id"], name: "index_events_on_calendar_id_and_g_id", unique: true
     t.index ["calendar_id"], name: "index_events_on_calendar_id"
+    t.index ["end_time"], name: "index_events_on_end_time"
+    t.index ["start_time"], name: "index_events_on_start_time"
   end
 
   create_table "tokens", force: :cascade do |t|
