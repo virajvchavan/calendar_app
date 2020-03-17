@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_authenticity_token, :only => [:google_webhook_callback]
+
   def index
   end
 
