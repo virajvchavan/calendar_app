@@ -5,7 +5,10 @@ class SessionsController < ApplicationController
     log_in(user)
 
     update_token(user, auth)
-    user.load_calendars_with_events if is_new_user
+    if is_new_user
+      user.load_calendars_with_events
+      GoogleCalendarApi.new(user.reload.google_token).watch_calendars
+    end
 
     redirect_to events_daily_path
   end

@@ -37,10 +37,15 @@ class User < ApplicationRecord
       syncToken: self.google_sync_token
     })
     response[:items].each do |item|
-      c = calendars.find_or_create_by(g_id: item[:g_id])
-      c.assign_attributes(item.except(:g_id))
-      c.save!
-      load_events(c, service)
+      calendar = calendars.find_or_create_by(g_id: item[:g_id])
+      calendar.assign_attributes(item.except(:g_id))
+      is_new_record = calendar.new_record?
+      calendar.save!
+      load_events(calendar, service)
+
+      if is_new_record
+        service.watch_calendar_events(calendar.g_id)
+      end
     end
     if response[:nextPageToken]
       load_calendars_with_events(service, response[:nextPageToken])

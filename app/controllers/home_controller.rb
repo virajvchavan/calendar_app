@@ -10,11 +10,12 @@ class HomeController < ApplicationController
 
     if (request.headers['X-Goog-Channel-Token'])
       request_token = Rack::Utils.parse_nested_query request.headers['X-Goog-Channel-Token']
+      puts request_token
       user = User.find_by(id: request_token['userId'])
 
       unless user
         puts "Webhook error: User not found"
-        head :ok
+        head :ok and return
       end
 
       case request_token['type']
@@ -24,7 +25,7 @@ class HomeController < ApplicationController
         calendar = user.calendars.find_by(g_id: request_token['cId'])
         unless calendar
           puts "Webhook error: Calendar not found"
-          head :ok
+          head :ok and return
         end
         user.load_events(calendar, GoogleCalendarApi.new(user.google_token))
       end
