@@ -29,3 +29,6 @@ $secondary-color: color("yellow", "base") !default;
 .card .card-content .card-title {
   font-weight: 400;
 }
+.card .card-content.flow-text {
+  overflow-wrap: break-word;
+}
