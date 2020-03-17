@@ -25,10 +25,10 @@ class GoogleCalendarApi
     )
 
     if response.code == 200
-      puts "Webook registered for calendar: #{calendar_id} /events (User #{@token.user_id})"
+      puts "Webook registered for calendar: #{calendar_g_id} /events (User #{@token.user_id})"
       puts "Success: #{response}"
     else
-      puts "Error registering webook for calendar events (Calendar: #{calendar_id}, User #{@token.user_id})"
+      puts "Error registering webook for calendar events (Calendar: #{calendar_g_id}, User #{@token.user_id})"
       puts "Error: #{response}"
     end
   end

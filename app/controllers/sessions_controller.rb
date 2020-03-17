@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     log_in(user)
 
     update_token(user, auth)
-    user.load_calendars if is_new_user
+    user.load_calendars_with_events if is_new_user
 
     redirect_to events_daily_path
   end

@@ -30,9 +30,12 @@ class User < ApplicationRecord
   end
 
   # TODO: Move these methods to a better place, maybe into a job
-  def load_calendars(page_token = {})
+  def load_calendars_with_events(page_token = nil)
     service = GoogleCalendarApi.new(google_token)
-    response = service.calendar_list({ pageToken: page_token })
+    response = service.calendar_list({
+      pageToken: page_token,
+      syncToken: self.google_sync_token
+    })
     response[:items].each do |item|
       c = calendars.find_or_create_by(g_id: item[:g_id])
       c.assign_attributes(item.except(:g_id))
@@ -40,19 +43,28 @@ class User < ApplicationRecord
       load_events(c, service)
     end
     if response[:nextPageToken]
-      load_calendars(service, response[:nextPageToken])
+      load_calendars_with_events(service, response[:nextPageToken])
+    end
+    if response[:nextSyncToken]
+      self.update(google_sync_token: response[:nextSyncToken])
     end
   end
 
-  def load_events(calendar, service, page_token = {})
-    response = service.calendar_events(calendar.g_id, { pageToken: page_token })
+  def load_events(calendar, service, page_token = nil)
+    response = service.calendar_events(calendar.g_id, {
+      pageToken: page_token,
+      syncToken: calendar.google_sync_token
+    })
     response[:items].each do |item|
-      c = calendar.events.find_or_create_by(g_id: item[:g_id])
-      c.assign_attributes(item.except(:g_id))
-      c.save!
+      event = calendar.events.find_or_create_by(g_id: item[:g_id])
+      event.assign_attributes(item.except(:g_id))
+      event.save!
     end
     if response[:nextPageToken]
       load_events(calendar, service, response[:nextPageToken])
+    end
+    if response[:nextSyncToken]
+      calendar.update(google_sync_token: response[:nextSyncToken])
     end
   end
 end

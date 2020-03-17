@@ -26,9 +26,11 @@ class Token < ApplicationRecord
     puts 'refresh token response: ' + response.to_s
 
     new_access_token = JSON.parse(response.body)
-    self.access_token = new_access_token['access_token']
-    self.expires_at = Time.now.to_i + new_access_token['expires_in'].to_i
-    self.save
+    if (new_access_token['access_token'])
+      self.access_token = new_access_token['access_token']
+      self.expires_at = Time.now.to_i + new_access_token['expires_in'].to_i
+      self.save
+    end
     self
   end
 
