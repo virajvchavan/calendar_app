@@ -10,6 +10,7 @@ class HomeController < ApplicationController
     puts request.headers['X-Goog-Channel-ID']
     puts request.headers['X-Goog-Resource-ID']
     puts request.headers['X-Goog-Resource-State']
+    puts request.headers['X-Goog-Channel-Token']
     head :ok
   end
 end

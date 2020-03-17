@@ -18,10 +18,10 @@ class GoogleCalendarApi
     )
   end
 
-  def watch_calendar_events(calendar_id)
+  def watch_calendar_events(calendar_g_id)
     response = self.class.post(
-      "/calendars/#{calendar_id}/events/watch",
-      webhook_params
+      "/calendars/#{calendar_g_id}/events/watch",
+      webhook_params('events', calendar_g_id)
     )
 
     if response.code == 200
@@ -36,7 +36,7 @@ class GoogleCalendarApi
   def watch_calendars
     response = self.class.post(
       '/users/me/calendarList/watch',
-      webhook_params
+      webhook_params('calendars')
     )
 
     if response.code == 200
@@ -72,7 +72,7 @@ class GoogleCalendarApi
     { headers: { 'Authorization' => "Bearer #{@token.access_token}" } }
   end
 
-  def webhook_params
+  def webhook_params(webhook_type, calendar_g_id = nil)
     {
       headers: {
         'Authorization' => "Bearer #{@token.access_token}",
@@ -81,7 +81,8 @@ class GoogleCalendarApi
       body: {
         id: SecureRandom.uuid,
         type: 'webhook',
-        address: "https://#{DOMAIN_NAME}/google_webhook_callback"
+        address: "https://#{DOMAIN_NAME}/google_webhook_callback",
+        token: "type=#{webhook_type}&userId=#{@token.user_id}&cId=#{calendar_g_id}"
       }.to_json
     }
   end
