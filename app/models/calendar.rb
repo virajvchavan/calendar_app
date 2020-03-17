@@ -17,7 +17,8 @@ class Calendar < ApplicationRecord
   belongs_to :user
   has_many :events, dependent: :destroy
 
-  validates :g_id, uniqueness: { scope: :user_id }
+  validates :g_id, uniqueness: { scope: :user_id }, presence: true
+  validates :user_id, presence: true
 
   def daily_events
     events.active.where(

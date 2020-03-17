@@ -19,7 +19,8 @@
 class Event < ApplicationRecord
   belongs_to :calendar
 
-  validates :g_id, uniqueness: { scope: :calendar_id }
+  validates :g_id, uniqueness: { scope: :calendar_id }, presence: true
+  validates :calendar_id, presence: true
 
   scope :active,  -> { where('status != ?', 'cancelled') }
 end
