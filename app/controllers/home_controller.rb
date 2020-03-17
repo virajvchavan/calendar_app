@@ -6,8 +6,10 @@ class HomeController < ApplicationController
 
   def google_webhook_callback
     puts "In google_webhook_callback."
-    puts request.to_json
     puts params
+    puts request.headers['X-Goog-Channel-ID']
+    puts request.headers['X-Goog-Resource-ID']
+    puts request.headers['X-Goog-Resource-State']
     head :ok
   end
 end
