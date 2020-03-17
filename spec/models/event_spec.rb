@@ -19,11 +19,12 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  describe '#g_id' do
+  context 'validations' do
     it { should validate_presence_of(:g_id) }
+    it { should validate_presence_of(:calendar_id) }
   end
 
-  describe '#calendar_id' do
-    it { should validate_presence_of(:calendar_id) }
+  context 'associations' do
+    it { should belong_to(:calendar) }
   end
 end

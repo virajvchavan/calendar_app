@@ -14,12 +14,13 @@
 require 'rails_helper'
 
 RSpec.describe Token, type: :model do
-  describe '#user_id' do
+  context 'validations' do
     it { should validate_presence_of(:user_id) }
-  end
-
-  describe '#provider' do
     it { should validate_presence_of(:provider) }
     it { should validate_inclusion_of(:provider).in_array(['google']) }
+  end
+
+  context 'associations' do
+    it { should belong_to(:user) }
   end
 end

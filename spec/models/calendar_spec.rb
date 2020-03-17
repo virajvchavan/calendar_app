@@ -16,11 +16,13 @@
 require 'rails_helper'
 
 RSpec.describe Calendar, type: :model do
-  describe '#g_id' do
+  context 'validations' do
     it { should validate_presence_of(:g_id) }
+    it { should validate_presence_of(:user_id) }
   end
 
-  describe '#user_id' do
-    it { should validate_presence_of(:user_id) }
+  context 'associations' do
+    it { should belong_to(:user) }
+    it { should have_many(:events) }
   end
 end
