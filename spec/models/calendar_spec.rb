@@ -16,5 +16,11 @@
 require 'rails_helper'
 
 RSpec.describe Calendar, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#g_id' do
+    it { should validate_presence_of(:g_id) }
+  end
+
+  describe '#user_id' do
+    it { should validate_presence_of(:user_id) }
+  end
 end

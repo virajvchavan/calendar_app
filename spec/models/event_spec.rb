@@ -19,5 +19,11 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#g_id' do
+    it { should validate_presence_of(:g_id) }
+  end
+
+  describe '#calendar_id' do
+    it { should validate_presence_of(:calendar_id) }
+  end
 end
