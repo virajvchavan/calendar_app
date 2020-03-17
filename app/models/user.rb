@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :calendars, dependent: :destroy
   has_many :events, through: :calendars
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first_or_initialize do |record|
