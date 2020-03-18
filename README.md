@@ -2,6 +2,8 @@
 
 Easily access your Google Calendar events for today, classified by calendar names.
 
+Deployed here: https://calendars-vc.herokuapp.com/
+
 ## Features
 - When a user connects the Google account, all the calendars and events are imported to the App.
 - The subsequent events which get created/updated/deleted are sync'd to the app automatically
@@ -21,6 +23,7 @@ Easily access your Google Calendar events for today, classified by calendar name
 
 ## Possible improvements/pending tasks
 - Please take a look at **Issues** section of this repository.
+- Will be working on these as I get time.
 
 ## Run locally
 - Ruby '2.7.0'
