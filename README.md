@@ -1,3 +1,4 @@
+> This was a take-home assignment for a job I had applied for.
 # Simple Calendar Events
 
 Easily access your Google Calendar events for today, classified by calendar names.
